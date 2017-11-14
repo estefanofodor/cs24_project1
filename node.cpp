@@ -1,4 +1,4 @@
-//Estefano Fodor, Juan Martinez
+// Estefano Fodor, Juan Martinez
 // November 11th, 2017
 #ifndef NODE_CPP
 #define NODE_CPP
@@ -6,15 +6,22 @@
 #include "node.h"
 #include <string>
 
-Node::Node(char var = 'x'){
-  node_t.data.var = x;
+Node::Node(char var){
+  data.var = var;
 }
-Node::Node(operator_type op = PLUS, Node* operand1 = NULL, Node* operand2 = NULL){
-  node_t.data.op = op;
+Node::Node(operator_type op, Node* operand1, Node* operand2, Node* parent){
+  data.op = op;
+  this->operand1 = operand1;
+  this->operand2 = operand2;
+  this->parent = parent;
 }
 
-Node::Node(int val = 0){
-  node_t.data.val = val;
+Node::Node(int val){
+  data.val = val;
+}
+
+Node::Node(Node* parent){
+  this->parent = parent;
 }
 ~Node(){
   delete node_t;
@@ -27,7 +34,7 @@ string Node::print_infix() const{
       infix[i] = "(";
     }
     else if (i == 2){
-      infix[i] = node_t.data.var;
+      infix[i] = data.var;
     }
     else if (i == 4){
       infix[i] = print_operator();
@@ -53,7 +60,7 @@ string Node::print_prefix() const{
       prefix[i] = print_operator();
     }
     else if(i = 2){
-      prefix[i] = node_t.data.var;
+      prefix[i] = data.var;
     }
     else if(i = 4){
       prefix[i] = int_to_string();
@@ -69,7 +76,7 @@ string Node::print_postfix() const{
   string postfix[5];
   for( int i = 0; i < 5; i++){
     if(i = 0){
-      postfix[i] = node_t.data.var;
+      postfix[i] = data.var;
     }
     else if(i = 2){
       postfix[i] = int_to_string();
@@ -85,23 +92,47 @@ string Node::print_postfix() const{
 }
 
 string NODE::int_to_string() const{
-  string s[1] = to_string(node_t.data.val);
+  string s[1] = to_string(data.val);
   return s;
 }
 
 char print_operator() const{
   char c;
-  if(node_t.data.op == PLUS){
+  if(data.op == PLUS){
     c = '+';
   }
-  else if(node_t.data.op == MINUS){
+  else if(data.op == MINUS){
     c = '-';
   }
-  else if(node_t.data.op == MULT){
+  else if(data.op == MULT){
     c = '*';
   }
-  else if(node_t.data.op == DIVIDE){
+  else if(data.op == DIVIDE){
     c = '/';
   }
   return c;
 }
+
+Node Node::get_operand1(Node *a) const{
+  return operand1;
+}
+
+Node Node::get_operand2(Node *a) const{
+  return operand2;
+}
+
+Node Node::get_parent(Node *a) const{
+  return parent;
+}
+
+void change_operand1(Node *source, Node *a){
+  source->operand1 = a;
+  return;
+}
+
+void change_operand2(Node *source, Node *a){
+  source->operand2 = a;
+  return;
+}
+
+#endif
