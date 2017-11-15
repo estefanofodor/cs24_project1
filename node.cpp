@@ -23,116 +23,91 @@ Node::Node(int val){
 Node::Node(Node* parent){
   this->parent = parent;
 }
-~Node(){
-  delete node_t;
+~Node(Node* source){
+  delete source;
 }
 
-string Node::print_infix() const{
-  string infix[9];
-  for ( int i = 0; i < 9; i++){
-    if(i == 0 ) {
-      infix[i] = "(";
-    }
-    else if (i == 2){
-      infix[i] = data.var;
-    }
-    else if (i == 4){
-      infix[i] = print_operator();
-    }
-    
-    else if (i == 6){
-      infix[i] = int_to_string;
-    }
-    else if (i == 8){
-      infix[i] = ")";
-    }
-    else {
-      infix[i] = " ";
-    }
+string Node::print_infix(Node *source) const{
+  string s1 = "";
+  if(source.val != null){
+    s1 = int_to_string(source) + ' )';
   }
-  return infix;
-}
-
-string Node::print_prefix() const{
-  string prefix[5];
-  for( int i = 0; i < 5; i++){
-    if(i = 0){
-      prefix[i] = print_operator();
-    }
-    else if(i = 2){
-      prefix[i] = data.var;
-    }
-    else if(i = 4){
-      prefix[i] = int_to_string();
-    }
-    else{
-      prefix[i] = " ";
-    }
+  else if(source.var != null){
+    s1 = '( '+ source.var + ' ';
   }
-  return prefix;
-}
-
-string Node::print_postfix() const{
-  string postfix[5];
-  for( int i = 0; i < 5; i++){
-    if(i = 0){
-      postfix[i] = data.var;
-    }
-    else if(i = 2){
-      postfix[i] = int_to_string();
-    }
-    else if (i =4){
-      postfix[i] = print_operator();
-    }
-    else {
-      postfix[i] = " ";
-    }
+  else if(source.op != null){
+    s1 = print_operator(source) + ' ';
   }
-  return postfix;
 }
 
-string NODE::int_to_string() const{
-  string s[1] = to_string(data.val);
+string Node::print_prefix(Node *source) const{
+  string s1 = "";
+  if(source.val != null){
+    s1 = int_to_string(source) + ' ';
+  }
+  else if(source.var != null){
+    s1 = source.var + ' ';
+  }
+  else if(source.op != null){
+    s1 = print_operator(source) + ' ';
+  }
+}
+
+string Node::print_postfix(Node *source) const{
+  if(source.val != null) {
+    s1 = int_to_string(source) + ' ';
+  }
+  else if(source.var != null){
+    s1 = source.var + ' ';
+  }
+  else if(source.op != null){
+    s1 = print_operator(source) + ' ';
+  }
+}
+
+string NODE::int_to_string(Node *source) const{
+  string s[1] = to_string(source.data.val);
   return s;
 }
 
-char print_operator() const{
+char print_operator(Node *source) const{
   char c;
-  if(data.op == PLUS){
+  if(source.data.op == PLUS){
     c = '+';
   }
-  else if(data.op == MINUS){
+  else if(source.data.op == MINUS){
     c = '-';
   }
-  else if(data.op == MULT){
+  else if(source.data.op == MULT){
     c = '*';
   }
-  else if(data.op == DIVIDE){
+  else if(source.data.op == DIVIDE){
     c = '/';
   }
   return c;
 }
 
 Node Node::get_operand1(Node *a) const{
-  return operand1;
+  return a->operand1;
 }
 
 Node Node::get_operand2(Node *a) const{
-  return operand2;
+  return a->operand2;
 }
 
 Node Node::get_parent(Node *a) const{
   return parent;
 }
 
+void change_operator(Node *source, operator_type op){
+  source->data.op = op;
+}
+
 void change_operand1(Node *source, Node *a){
   source->operand1 = a;
-  return;
 }
 
 void change_operand2(Node *source, Node *a){
   source->operand2 = a;
-  return;
 }
-
 #endif

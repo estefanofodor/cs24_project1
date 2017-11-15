@@ -22,19 +22,20 @@ class NODE {
     Node(int val = 0);
     Node(Node *parent = NULL);
     // Destructor
-    ~Node();
+    ~Node(Node* source);
     // Observers
-    string print_infix() const;
-    string print_prefix() const;
-    string print_postfix() const;
-    string int_to_string() const;
-    char print_operator() const;
+    string print_infix(Node *source) const;
+    string print_prefix(Node *source) const;
+    string print_postfix(Node *source) const;
+    string int_to_string(Node *source) const;
+    char print_operator(Node *source) const;
     Node get_operand1(Node *a) const;
     Node get_operand2(Node *a) const;
     Node get_parent(Node *a) const;
     // Modifiers
-    void change_operand1(Node *operand1, Node *b);
-    void change_operand2(Node *operand2, Node *b);
+    void change_operator(Node *source, operator_type op);
+    void change_operand1(Node *source, Node *a);
+    void change_operand2(Node *source, Node *a);
  private:
     node_type node_t;
     data_type data;

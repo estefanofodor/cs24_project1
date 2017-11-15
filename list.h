@@ -9,11 +9,12 @@ using namespace std;
 
 class List{
  public:
-  Node* pars_expr(string expr);
-  
+  List();
+  Node pars_expr(string expr);
+  Node get_root();
 
  private:
-  Node* head;
+  Node* root;
   
 };
 #endif

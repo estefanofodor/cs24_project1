@@ -6,8 +6,12 @@
 #include "list.h"
 #include <cstdlib>
 
+List::List(){
+  Node root = new Node(null);
+}
+
 Node List::pars_expr(string expr){
-  Node *current = new Node;
+  Node *current = root;
   int val = 0;
   while (expr[i] != NULL){
     val = atoi(expr[i]);
@@ -35,5 +39,11 @@ Node List::pars_expr(string expr){
     }
     i++;
   }
+  return root;
 }
+
+Node List::get_root(){
+  return root;
+}
+
 #endif    
