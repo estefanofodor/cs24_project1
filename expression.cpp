@@ -25,7 +25,7 @@ void Expression::infix(Node* source){
   return;
 }
 
-void Expression::prefix(){
+void Expression::prefix(Node* source){
   if(n == NULL){
     return;
   }
@@ -39,7 +39,7 @@ void Expression::prefix(){
   return;
 }
 
-void Expression::postfix(){
+void Expression::postfix(Node* source){
   if( n == NULL){
     return;
   }

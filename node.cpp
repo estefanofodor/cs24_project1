@@ -7,107 +7,130 @@
 #include <string>
 
 Node::Node(char var){
-  data.var = var;
+  this->node_t = VARIABLE;
+  this->data.var = var;
+  this->operand1 = NULL;
+  this->operand2 = NULL;
+  this->parent = NULL;
 }
-Node::Node(operator_type op, Node* operand1, Node* operand2, Node* parent){
-  data.op = op;
+Node::Node(operator_type op, Node* operand1, Node* operand2){
+  this->node_t = EXPRESSION;
+  this->data.op = op;
   this->operand1 = operand1;
   this->operand2 = operand2;
-  this->parent = parent;
+  this->parent = NULL;
 }
 
 Node::Node(int val){
-  data.val = val;
+  this->node_t = INTEGER;
+  this->data.val = val;
+  this->operand1 = NULL;
+  this->operand2 = NULL;
 }
 
-Node::Node(Node* parent){
-  this->parent = parent;
-}
-~Node(Node* source){
-  delete source;
+Node::~Node(){
+  if(this != NULL){
+    delete this->operand1;
+    delete this->operand2;
+    delete this->parent;
+  }
 }
 
-string Node::print_infix(Node *source) const{
+string Node::print_infix() const{
   string s1 = "";
-  if(source.val != null){
-    s1 = int_to_string(source) + ' )';
+  if(getNodeType() == INTEGER){
+    s1 = int_to_string() + ' ' + ')';
   }
-  else if(source.var != null){
-    s1 = '( '+ source.var + ' ';
+  else if(getNodeType() == VARIABLE){
+    s1 = '('+ ' ' + this->data.var + ' ';
   }
-  else if(source.op != null){
-    s1 = print_operator(source) + ' ';
+  else if(getNodeType() == EXPRESSION){
+    s1 = print_operator() + ' ';
   }
 }
 
-string Node::print_prefix(Node *source) const{
+string Node::print_prefix() const{
   string s1 = "";
-  if(source.val != null){
-    s1 = int_to_string(source) + ' ';
+  if(getNodeType() == INTEGER){
+    s1 = int_to_string() + ' ';
   }
-  else if(source.var != null){
-    s1 = source.var + ' ';
+  else if(getNodeType() == VARIABLE){
+    s1 = this->data.var + ' ';
   }
-  else if(source.op != null){
-    s1 = print_operator(source) + ' ';
-  }
-}
-
-string Node::print_postfix(Node *source) const{
-  if(source.val != null) {
-    s1 = int_to_string(source) + ' ';
-  }
-  else if(source.var != null){
-    s1 = source.var + ' ';
-  }
-  else if(source.op != null){
-    s1 = print_operator(source) + ' ';
+  else if(getNodeType() == EXPRESSION){
+    s1 = print_operator() + ' ';
   }
 }
 
-string NODE::int_to_string(Node *source) const{
-  string s[1] = to_string(source.data.val);
-  return s;
+string Node::print_postfix() const{
+  string s1 = "";
+  if(getNodeType() == INTEGER) {
+    s1 = int_to_string() + ' ';
+  }
+  else if(getNodeType() == VARIABLE){
+    s1 = this->data.var + ' ';
+  }
+  else if(getNodeType() == EXPRESSION){
+    s1 = print_operator() + ' ';
+  }
 }
 
-char print_operator(Node *source) const{
+string Node::int_to_string() const{
+  string s = "";
+  if (this->data.val >= 0 || this->data.val <= 9){ 
+    string s = to_string(this->data.val);
+    return s;
+  }
+}
+
+node_type Node::getNodeType() const{
+  return this->node_t;
+}
+
+char Node::print_operator() const{
   char c;
-  if(source.data.op == PLUS){
+  if(this->data.op == PLUS){
     c = '+';
   }
-  else if(source.data.op == MINUS){
+  else if(this->data.op == MINUS){
     c = '-';
   }
-  else if(source.data.op == MULT){
+  else if(this->data.op == MULT){
     c = '*';
   }
-  else if(source.data.op == DIVIDE){
+  else if(this->data.op == DIVIDE){
     c = '/';
   }
   return c;
 }
 
-Node Node::get_operand1(Node *a) const{
-  return a->operand1;
+
+Node* Node::get_operand1() const{
+  return this->operand1;
 }
 
-Node Node::get_operand2(Node *a) const{
-  return a->operand2;
+Node* Node::get_operand2() const{
+  return this->operand2;
 }
 
-Node Node::get_parent(Node *a) const{
-  return parent;
+Node* Node::get_parent() const{
+  return this->parent;
 }
 
-void change_operator(Node *source, operator_type op){
-  source->data.op = op;
+void Node::change_operator(operator_type op){
+  this->data.op = op;
 }
 
-void change_operand1(Node *source, Node *a){
-  source->operand1 = a;
+void Node::change_operand1(Node *a){
+  this->operand1 = a;
 }
 
-void change_operand2(Node *source, Node *a){
-  source->operand2 = a;
+void Node::change_operand2(Node *a){
+  this->operand2 = a;
 }
+void Node::setParent(Node *a){
+   this->parent = a;
+};
+
+
 #endif

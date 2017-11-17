@@ -3,6 +3,7 @@
 #ifndef LIST_H
 #define LIST_H
 #include "node.h"
+#include <string>
 
 using namespace std;
 
@@ -10,9 +11,9 @@ using namespace std;
 class List{
  public:
   List();
-  Node pars_expr(string expr);
-  Node get_root();
-
+  void pars_expr(string expr);
+  Node* get_root();
+  
  private:
   Node* root;
   

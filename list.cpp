@@ -7,43 +7,77 @@
 #include <cstdlib>
 
 List::List(){
-  Node root = new Node(null);
+  this->root = new Node(PLUS);
 }
 
-Node List::pars_expr(string expr){
-  Node *current = root;
+void List::pars_expr(string expr){
+  operator_type opr;
+  int par = 0;
+  int j = 0;
+  while(expr[j] != '\0'){
+    if (expr[j] == '('){
+      par++;
+    }
+    else if(expr[j] == ')'){
+      par--;
+    }
+    j++;
+  }
+  if(par != 0){
+    return;
+  }
+  Node* current = root;
   int val = 0;
-  while (expr[i] != NULL){
-    val = atoi(expr[i]);
-    if ( expr[i] == '('){
-      Node* n = new Node(current);
-      if(get_operand1(current) == NULL){
-	set_operand1(current, n);
+  int i = 0;
+  char c = expr[0];
+  while (c != '\0'){
+    c = expr[i];
+    if ( c == '('){
+      Node* n = new Node(PLUS);
+      n->setParent(current);
+      if(current->get_operand1() == NULL){
+	current->change_operand1(n);
       }
       else{
-	set_operand2(current, n);
+	current->change_operand2(n);
       }
       current = n;
     }
-    else if(expr[i] == '+' || expr[i] == '-' || expr[i] == '*' || expr[i] == '/'){
-      Node(expr[i]);
+    else if(c == '+' || c == '-' || c == '*' || c == '/'){
+      if(c == '+'){
+    	opr = PLUS;
+      }
+      else if(c = '-'){
+    	opr = MINUS;
+      }
+      else if(c = '*'){
+    	opr = MULT;
+      }
+      else if(c = '/'){
+    	opr = DIVIDE;
+      }
+      current->change_operator(opr);
     }
-    else if(expr[i] == 'x'){
-      Node(expr[i]);
+    else if(c == 'x'){
+      Node* p = new Node(c);
+      p->setParent(current->get_parent());
+      current = p;
     }
     else if(val >= 0 || val <= 9){
-      Node(val);
+      Node* q = new Node(val);
+      q->setParent(current->get_parent());
+      current = q;
     }
-    else if(expr[i] == ')'){
-      current = get_parent(current);
+    else if(c == ')'){
+      current = current->get_parent();
     }
     i++;
   }
-  return root;
+  return;
 }
 
-Node List::get_root(){
-  return root;
-}
+Node* List::get_root(){
+  return this->root;
+};
 
 #endif    

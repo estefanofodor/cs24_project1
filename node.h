@@ -3,6 +3,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <string>
+
 using namespace std;
 
 enum node_type{EXPRESSION, VARIABLE, INTEGER};
@@ -14,28 +16,29 @@ union data_type {
   int val;
 };
 
-class NODE {
+class Node {
  public:
     // Constructor
     Node(char var = 'x');
     Node(operator_type op = PLUS, Node* operand1 = NULL, Node* operand2 = NULL);
     Node(int val = 0);
-    Node(Node *parent = NULL);
     // Destructor
-    ~Node(Node* source);
+    ~Node();
     // Observers
-    string print_infix(Node *source) const;
-    string print_prefix(Node *source) const;
-    string print_postfix(Node *source) const;
-    string int_to_string(Node *source) const;
-    char print_operator(Node *source) const;
-    Node get_operand1(Node *a) const;
-    Node get_operand2(Node *a) const;
-    Node get_parent(Node *a) const;
+    string print_infix() const;
+    string print_prefix() const;
+    string print_postfix() const;
+    string int_to_string() const;
+    char print_operator() const;
+    node_type getNodeType() const;
+    Node* get_operand1() const;
+    Node* get_operand2() const;
+    Node* get_parent() const;
     // Modifiers
-    void change_operator(Node *source, operator_type op);
-    void change_operand1(Node *source, Node *a);
-    void change_operand2(Node *source, Node *a);
+    void setParent(Node *a);
+    void change_operator(operator_type op);
+    void change_operand1(Node *a);
+    void change_operand2(Node *a);
  private:
     node_type node_t;
     data_type data;
