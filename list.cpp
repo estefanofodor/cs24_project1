@@ -12,7 +12,8 @@ List::List(){
 
 Node* List::pars_expr(string expr){
   operator_type opr;
-  Node* current = root;
+  this->root = new Node(PLUS);
+  Node* current = this->root;
   int val = 0;
   int i = 0;
   char c = expr[0];
@@ -25,7 +26,7 @@ Node* List::pars_expr(string expr){
       if(current->get_operand1() == NULL){
 	current->change_operand1(n);
       }
-      else{
+      else if(current->get_operand2() == NULL){
 	current->change_operand2(n);
       }
       current = n;
@@ -47,14 +48,11 @@ Node* List::pars_expr(string expr){
     }
     else if(c == 'x'){
       Node* p = new Node(c);
-      p->setParent(current->get_parent());
       current->change_operand2(p);
-      current = current->get_parent();
     }
     else if(val >= 0 || val <= 9){
       Node* q = new Node(val);
       current->change_operand1(q);
-      q->setParent(current->get_parent());
       current = current->get_parent();
     }
     else if(c == ')'){
@@ -62,10 +60,6 @@ Node* List::pars_expr(string expr){
     }
     i++;
   }
-  return this->root;
-}
-
-Node* List::get_root() const{
   return this->root;
 };
 

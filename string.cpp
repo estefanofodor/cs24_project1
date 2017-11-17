@@ -12,7 +12,7 @@ int main(){
   List list;
   Expression expression;
   string s1 = "";
-  cout << "Enter an expression: " << endl;
+  cout << "Enter an expression: ";
   cin >> s1;
   Node* n = list.pars_expr(s1);
   expression.infix(n);

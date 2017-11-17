@@ -12,11 +12,13 @@ Expression::Expression(){
 }
 
 void Expression::infix(Node* source){
+  this->s1 = "";
   this->n = source;
   if(this->n == NULL){
     return;
   }
   if(this->n->get_operand1() != NULL){
+    this->s1 += '(';
     infix(n->get_operand1());
   }
   this->s1 += this->n->print_infix();
@@ -27,6 +29,7 @@ void Expression::infix(Node* source){
 }
 
 void Expression::prefix(Node* source) {
+  this->s1 = "";
   this->n = source;
   if(this->n == NULL){
     return;
@@ -42,6 +45,7 @@ void Expression::prefix(Node* source) {
 }
 
 void Expression::postfix(Node* source) {
+  this->s1 = "";
   this->n = source;
   if(this->n == NULL){
     return;
