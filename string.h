@@ -3,20 +3,13 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include "node.h"
-#include "list.h"
+#include <iostream>
 #include "expression.h"
-#include <string>
-
 using namespace std;
 
 class String{
  public:
   int main();
-  
  private:
-  string infix;
-  string prefix;
-  string postfix;
 };
 #endif

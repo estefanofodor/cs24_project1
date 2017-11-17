@@ -10,28 +10,15 @@ List::List(){
   this->root = new Node(PLUS);
 }
 
-void List::pars_expr(string expr){
+Node* List::pars_expr(string expr){
   operator_type opr;
-  int par = 0;
-  int j = 0;
-  while(expr[j] != '\0'){
-    if (expr[j] == '('){
-      par++;
-    }
-    else if(expr[j] == ')'){
-      par--;
-    }
-    j++;
-  }
-  if(par != 0){
-    return;
-  }
   Node* current = root;
   int val = 0;
   int i = 0;
   char c = expr[0];
   while (c != '\0'){
     c = expr[i];
+    val = c;
     if ( c == '('){
       Node* n = new Node(PLUS);
       n->setParent(current);
@@ -61,11 +48,13 @@ void List::pars_expr(string expr){
     else if(c == 'x'){
       Node* p = new Node(c);
       p->setParent(current->get_parent());
+      delete current;
       current = p;
     }
     else if(val >= 0 || val <= 9){
       Node* q = new Node(val);
       q->setParent(current->get_parent());
+      delete current;
       current = q;
     }
     else if(c == ')'){
@@ -73,10 +62,10 @@ void List::pars_expr(string expr){
     }
     i++;
   }
-  return;
+  return this->root;
 }
 
-Node* List::get_root(){
+Node* List::get_root() const{
   return this->root;
 };
 

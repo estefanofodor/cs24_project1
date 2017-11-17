@@ -13,6 +13,7 @@ Node::Node(char var){
   this->operand2 = NULL;
   this->parent = NULL;
 }
+
 Node::Node(operator_type op, Node* operand1, Node* operand2){
   this->node_t = EXPRESSION;
   this->data.op = op;
@@ -33,6 +34,7 @@ Node::~Node(){
     delete this->operand1;
     delete this->operand2;
     delete this->parent;
+    delete this;
   }
 }
 

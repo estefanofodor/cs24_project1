@@ -5,15 +5,15 @@
 
 #include <string>
 #include "list.h"
-#include "node.h"
 using namespace std;
 
 class Expression{
  public:
-  Expression(Node* source = NULL);
-  string infix(Node* source);
-  string prefix(Node* source);
-  string postfix(Node* source);
+  Expression();
+  void infix(Node* source);
+  void prefix(Node* source);
+  void postfix(Node* source);
+  string return_s1() const;
   
  private: 
   string s1;

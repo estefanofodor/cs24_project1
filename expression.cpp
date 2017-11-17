@@ -6,54 +6,58 @@
 #include "expression.h"
 #include <cstdlib>
 
-Expression::Expression(Node* source){
-  s1 = "";
-  n = source;
+Expression::Expression(){
+  this->s1 = "";
+  this->n = NULL;
 }
 
 void Expression::infix(Node* source){
-  if(n == NULL){
-    return s1;
-  }
-  if(get_operand1(n) != NULL){
-    infix(get_operand1(n));
-  }
-  s1 += print_infix(n);
-  else if(get_operand2(n) != NULL){
-    infix(get_operand2(n));
-  }
-  return;
-}
-
-void Expression::prefix(Node* source){
-  if(n == NULL){
+  this->n = source;
+  if(this->n == NULL){
     return;
   }
-  s1 += print_prefix(n);
-  if(get_operand1(n) != NULL){
-    prefix(get_operand1(n));
+  if(this->n->get_operand1() != NULL){
+    infix(n->get_operand1());
   }
-  else if(get_operand2(n) != NULL){
-    prefix(get_operand2(n));
+  this->s1 += this->n->print_infix();
+  if(this->n->get_operand2() != NULL){
+    infix(this->n->get_operand2());
   }
   return;
 }
 
-void Expression::postfix(Node* source){
-  if( n == NULL){
+void Expression::prefix(Node* source) {
+  this->n = source;
+  if(this->n == NULL){
     return;
   }
-  if(get_operand1(n) != NULL){
-    postfix(get_operand1(n));
+  this->s1 += this->n->print_prefix();
+  if(this->n->get_operand1() != NULL){
+    prefix(this->n->get_operand1());
   }
-  else if(get_operand2(n) != NULL){
-    postfix(get_operand2(n));
+  else if(this->n->get_operand2() != NULL){
+    prefix(this->n->get_operand2());
   }
-  s1 += print_postfix(n);
   return;
 }
 
-string Expression::return_s1(){
-  return s1;
+void Expression::postfix(Node* source) {
+  this->n = source;
+  if(this->n == NULL){
+    return;
+  }
+  if(this->n->get_operand1() != NULL){
+    postfix(this->n->get_operand1());
+  }
+  else if(this->n->get_operand2() != NULL){
+    postfix(this->n->get_operand2());
+  }
+  this->s1 += this->n->print_postfix();
+  return;
 }
+
+string Expression::return_s1() const{
+  return this->s1;
+};
+
 #endif

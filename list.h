@@ -11,8 +11,8 @@ using namespace std;
 class List{
  public:
   List();
-  void pars_expr(string expr);
-  Node* get_root();
+  Node* pars_expr(string expr);
+  Node* get_root() const;
   
  private:
   Node* root;
