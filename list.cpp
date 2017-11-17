@@ -48,14 +48,14 @@ Node* List::pars_expr(string expr){
     else if(c == 'x'){
       Node* p = new Node(c);
       p->setParent(current->get_parent());
-      delete current;
-      current = p;
+      current->change_operand2(p);
+      current = current->get_parent();
     }
     else if(val >= 0 || val <= 9){
       Node* q = new Node(val);
+      current->change_operand1(q);
       q->setParent(current->get_parent());
-      delete current;
-      current = q;
+      current = current->get_parent();
     }
     else if(c == ')'){
       current = current->get_parent();
