@@ -27,6 +27,7 @@ Node::Node(int val){
   this->data.val = val;
   this->operand1 = NULL;
   this->operand2 = NULL;
+  this->parent = NULL;
 }
 
 Node::~Node(){
@@ -41,7 +42,7 @@ Node::~Node(){
 string Node::print_infix() const{
   string s1 = "";
   if(getNodeType() == INTEGER){
-    s1 = int_to_string() + ')';
+    s1 = int_to_string()+ ')';
   }
   else if(getNodeType() == VARIABLE){
     s1 = '(' + this->data.var;

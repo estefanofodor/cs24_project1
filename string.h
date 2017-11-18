@@ -2,14 +2,12 @@
 // November 15th, 2017
 #ifndef STRING_H
 #define STRING_H
-
-#include <iostream>
+#include "node.h"
+#include "list.h"
 #include "expression.h"
-using namespace std;
+#include <iostream>
+class Node;
+class List;
+class Expression;
 
-class String{
- public:
-  int main();
- private:
-};
 #endif

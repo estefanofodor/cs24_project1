@@ -11,25 +11,31 @@ List::List(){
 }
 
 Node* List::pars_expr(string expr){
+  if(expr.length() == 0){
+    return this->root;
+  }
+  List();
   operator_type opr;
-  this->root = new Node(PLUS);
   Node* current = this->root;
-  int val = 0;
+  int val;
   int i = 0;
+  int length = expr.length();
   char c = expr[0];
-  while (c != '\0'){
+  while (i < length){
     c = expr[i];
-    val = c;
+    val = c - '0';
     if ( c == '('){
-      Node* n = new Node(PLUS);
-      n->setParent(current);
-      if(current->get_operand1() == NULL){
-	current->change_operand1(n);
+      if(current != this->root){
+	Node* n = new Node(PLUS);
+	n->setParent(current);
+	if(current->get_operand1() == NULL){
+	  current->change_operand1(n);
+	}
+	else if(current->get_operand2() == NULL){
+	  current->change_operand2(n);
+	}
+	current = n;
       }
-      else if(current->get_operand2() == NULL){
-	current->change_operand2(n);
-      }
-      current = n;
     }
     else if(c == '+' || c == '-' || c == '*' || c == '/'){
       if(c == '+'){
@@ -48,11 +54,11 @@ Node* List::pars_expr(string expr){
     }
     else if(c == 'x'){
       Node* p = new Node(c);
-      current->change_operand2(p);
+      current->change_operand1(p);
     }
     else if(val >= 0 || val <= 9){
       Node* q = new Node(val);
-      current->change_operand1(q);
+      current->change_operand2(q);
       current = current->get_parent();
     }
     else if(c == ')'){

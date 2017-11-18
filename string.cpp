@@ -9,21 +9,22 @@ int main(){
   string in = "";
   string post = "";
   string pre = "";
+  string s1 = "";
   List list;
   Expression expression;
-  string s1 = "";
   cout << "Enter an expression: ";
   cin >> s1;
+  cout << list.pars_expr(s1);
   Node* n = list.pars_expr(s1);
   expression.infix(n);
   in = expression.return_s1();
+  cout << in;
   expression.postfix(n);
   post = expression.return_s1();
+  cout << post << endl;
   expression.prefix(n);
   pre = expression.return_s1();
-  cout << in << endl;
-  cout << post << endl;
-  cout << pre << endl;
+  cout << pre <<endl;
   return 0;
 };
 

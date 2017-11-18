@@ -12,7 +12,7 @@ class List{
  public:
   List();
   Node* pars_expr(string expr);
-    
+  Node* get_root(){return root;}
  private:
   Node* root;
   
